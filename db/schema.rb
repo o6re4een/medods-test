@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_25_092023) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_25_150446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "bmr_histories", force: :cascade do |t|
     t.bigint "patient_id", null: false
@@ -69,7 +70,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_25_092023) do
     t.decimal "weight", precision: 8, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.virtual "full_name", type: :text, as: "lower((((((COALESCE(first_name, ''::character varying))::text || ' '::text) || (COALESCE(last_name, ''::character varying))::text) || ' '::text) || (COALESCE(middle_name, ''::character varying))::text))", stored: true
     t.index ["first_name", "last_name", "middle_name", "birthday"], name: "index_patients_identity", unique: true
+    t.index ["full_name"], name: "index_patients_on_full_name", opclass: :gin_trgm_ops, using: :gin
     t.index ["gender_id"], name: "index_patients_on_gender_id"
   end
 
