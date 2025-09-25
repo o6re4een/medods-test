@@ -9,10 +9,7 @@ class Patient < ApplicationRecord
   has_many :doctor_patients, dependent: :destroy
   has_many :doctors, through: :doctor_patients
 
-
-
-
-
+  has_many :bmr_histories, dependent: :destroy
 
   def age(_when = Date.current)
     return nil unless birthday
