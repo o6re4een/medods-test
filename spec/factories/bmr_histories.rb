@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :bmr_history do
-    id { "" }
-    patient { nil }
-    formula_id { nil }
-    result { "9.99" }
-    calculated_on { "2025-09-25 14:20:23" }
+
+    patient { :patient }
+    formula {:formula}
+    result {Faker::Number.between(from: 1, to: 100)}
+    calculated_on { Faker::Date.between(from: 1.year.ago, to: Date.today) }
   end
 end

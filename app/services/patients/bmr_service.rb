@@ -19,14 +19,15 @@ module Patients
 
     def initialize(patient, formula_name)
       @patient = patient
-      @formula = FORMULS[formula_name]
+      @formula_name = formula_name.to_s
+      @formula_proc = FORMULS[@formula_name]
     end
 
     def call
-      raise ArgumentError, "Unsupported formula: #{@formula}" unless @formula
+      raise ArgumentError, "Unsupported formula: #{@formula_name}" unless @formula_name
 
-      result = @formula.call(@patient)
-      formula = Formula.find_by!(name: formula_name)
+      result = @formula_proc.call(@patient)
+      formula = Formula.find_by!(name: @formula_name)
 
       BmrHistory.create!(
       patient: @patient,
@@ -37,9 +38,6 @@ module Patients
       result
     end
 
-    private
-    def formula_name
-      FORMULS.keys.find{|key| FORMULS[key] == @formula}
-    end
+
   end
 end

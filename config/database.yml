@@ -19,15 +19,16 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-  host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
-  username: <%= ENV.fetch("DB_USER") { "postgres" } %>
-  password: <%= ENV.fetch("DB_PASSWORD") { "postgres" } %>
-  port: <%= ENV.fetch("DB_PORT") { "5436" } %>
+  username: <%= ENV.fetch("DB_USER") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
+
 
 
 development:
   <<: *default
-  database: medods_test_development
+  database: <%= ENV.fetch("DB_NAME") %>
+  host: <%= ENV.fetch("DB_HOST") %>
+  port: <%= ENV.fetch("DB_PORT") %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -61,7 +62,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: medods_test_test
+  database: <%= ENV.fetch("DB_NAME_TEST") %>
+  host: <%= ENV.fetch("DB_HOST_TEST") %>
+  port: <%= ENV.fetch("DB_PORT_TEST") %>
+  min_messages: WARNING
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

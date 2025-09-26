@@ -10,9 +10,11 @@ module Patients
 
     def call
       uri = URI(API_URL + "/#{@patient.weight}" + "/#{@patient.height.to_f/100}")
-      # uri.query = URI.to_query(height: @patient.height, weight: @patient.weight)
-      # URI = URI + "/"
+
       res = Net::HTTP.get_response(uri)
+      unless res.is_a?(Net::HTTPSuccess)
+        raise "BMI API error: #{res.code} #{res.message}"
+      end
       JSON.parse(res.body)
     end
   end

@@ -1,17 +1,32 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
 
   post "bmr", to: "bmrs#calculate"
   get "bmr", to: "bmrs#history"
 
   get "bmi", to: "bmi#calculate"
-  # resources :patients do
-  #   post :con
-  # end
-  get "patients/index" =>"patients#index"
-  get "patients/show"
-  post "patients/create" =>"patients#create"
-  put "patients/update" => "patients#update"
-  get "patients/destroy"
+
+
+  resources :patients
+
+  resources :bmrs, only: [] do
+    collection do
+      post :calculate
+      get :history
+    end
+  end
+
+  resources :bmi, only: [] do
+    collection do
+      get :calculate
+    end
+  end
+  # get "patients/index" =>"patients#index"
+  # get "patients/show"
+  # post "patients/create" =>"patients#create"
+  # put "patients/:id" => "patients#update"
+  # get "patients/destroy"
 
   resources :doctors
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

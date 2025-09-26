@@ -6,15 +6,15 @@ module Patients
     end
 
     def call
-      scope = Patient.all
+      scope = Patient.includes(:doctors).includes(:gender).all
 
       if @params[:full_name].present?
-        name = @params[:full_name].downcase
-        first_name, last_name, middle_name = name.split(" ")
-        scope = scope.where(
-          "TRIM(LOWER(first_name)) LIKE ? OR TRIM(LOWER(last_name)) LIKE ? OR TRIM(LOWER(middle_name)) LIKE ?",
-          "%#{first_name}%", "%#{last_name}%", "%#{middle_name}%"
-        )
+        name = @params[:full_name].strip.downcase!
+        reversed_name = @params[:full_name].split(' ').reverse.join(' ').downcase!
+
+
+        scope = scope.where("full_name ILIKE :name OR full_name ILIKE :reversed_name",
+                            name: "%#{name}%", reversed_name: "%#{reversed_name}%")
       end
 
       if @params[:gender].present?
@@ -27,7 +27,9 @@ module Patients
         scope = scope.where(birthday: from..to)
       end
 
-      scope.limit(@params[:limit] || 20).offset(@params[:offset] || 0).includes(:doctors)
+
+     scope.limit(@params[:limit] || 20).offset(@params[:offset] || 0)
+
     end
   end
 end

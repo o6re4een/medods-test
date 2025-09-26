@@ -255,6 +255,7 @@
     </entry>
     <entry key="test/mailers/previews">
       <value>file://$MODULE_DIR$/test/mailers/previews</value>
+      <value>file:///home/artem/ruby/medods-test/spec/mailers/previews</value>
       <value>file:///home/artem/ruby/medods-test/test/mailers/previews</value>
     </entry>
     <entry key="tmp">
