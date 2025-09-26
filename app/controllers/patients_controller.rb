@@ -25,6 +25,16 @@ class PatientsController < ApplicationController
     end
   end
 
+  def show
+    patient = Patient.find(params[:id])
+
+    if patient
+      render json: patient.as_json(include: [:doctors, :gender])
+    else
+      render json: {errors: patient.errors}, status: :unprocessable_entity
+    end
+  end
+
   def update
     patient = Patient.find(params[:id])
     Rails.logger.debug "UPDATE PARAMS: #{params.to_unsafe_h}"

@@ -53,18 +53,18 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "faker"
-  gem "rswag-specs"
-  gem "dotenv-rails"
 
+  gem "dotenv-rails"
 end
 
-gem 'rswag-api'
-gem 'rswag-ui'
+gem "sorbet-runtime"
 
+gem "rswag"
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "sorbet"
 end
 
 group :test do
@@ -72,7 +72,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "database_cleaner-active_record"
-  gem 'webmock'
+  gem "webmock"
 end
 
 gem "active_model_serializers", "~> 0.10.15"

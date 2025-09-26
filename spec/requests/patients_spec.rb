@@ -1,18 +1,45 @@
 require 'swagger_helper'
-RSpec.describe 'Patients API DOCS', type: :request do
+
+RSpec.describe 'Patients API', type: :request do
+  # let!(:patients) { create_list(:patient, 2) }
+
   path '/patients' do
-    get 'List patients' do
-      tags 'Patients'
-      produces 'application/json'
-      parameter name: :limit, in: :query, schema: { type: :integer }
+    get('list patients') do
+      parameter name: :full_name, in: :query, type: :string
+      parameter name: :gender, in: :query, type: :string
+      parameter name: :offset, in: :query, type: :integer
+      parameter name: :limit, in: :query, type: :integer
 
-      response '200', 'ok' do
-        let!(:patient) { create(:patient, :with_doctors) }
+      response(200, 'successful') do
+        let!(:patients) { create_list(:patient, 2) }
+        tags 'Patients'
+        produces "application/json"
 
+
+        let(:full_name) { patients[0].first_name+" "+patients[0].last_name+ ""+ patients[0].middle_name }
+        let(:gender) { create(:gender).name }
+        let(:offset) { 0 }
         let(:limit) { 10 }
+
+
+        after do |example|
+          content = example.metadata[:response][:content] || {}
+          example_spec = {
+            "application/json" => {
+              examples: {
+                test_example: {
+                  value: JSON.parse(response.body, symbolize_names: true)
+                }
+              }
+            }
+          }
+          example.metadata[:response][:content] = content.deep_merge(example_spec)
+        end
         run_test!
       end
     end
+
+
 
     post 'Create patient' do
       tags 'Patients'
@@ -31,16 +58,92 @@ RSpec.describe 'Patients API DOCS', type: :request do
               gender: { type: :string },
               doctor_ids: { type: :array, items: { type: :integer } }
             },
-            required: %w[first_name last_name birthday height weight]
+            required: %w[first_name last_name birthday height weight gender]
           }
         }
       }
 
       response '201', 'created' do
-        let!(:gender) {create(:gender, name: "male")}
+        let!(:gender) { create(:gender, name: "male") }
         let(:patient) { { patient: { first_name: 'A', last_name: 'B', birthday: '1990-01-01', height: 170, weight: 70.5, gender: 'male', doctor_ids: [] } } }
         run_test!
       end
     end
+  end
+
+  path '/patients/{id}' do
+    # You'll want to customize the parameter types...
+    parameter name: 'id', in: :path, type: :integer, description: 'id', required: true
+
+    get('show patient') do
+      tags 'Patients'
+      response(200, 'successful') do
+        let!(:patient) { create(:patient) }
+        let(:id) { patient.id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
+    end
+
+    put('update patient') do
+      tags 'Patients'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :patient, in: :body, description: 'patient', shema: {
+        type: :object,
+        properties: {
+          first_name: { type: :string },
+          last_name: { type: :string },
+          middle_name: { type: :string },
+          birthday: { type: :string, format: :date },
+          height: { type: :number },
+          weight: { type: :number },
+          gender: { type: :string },
+          doctor_ids: { type: :array, items: { type: :integer } }
+
+        }
+      }
+      before do |example|
+        @patient = FactoryBot.create(:patient)
+        submit_request(example.metadata)
+      end
+
+      response(200, 'successful') do
+        let(:patient) { @patient  }
+        let(:id) { @patient.id }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+        run_test!
+      end
+    end
+
+    # delete('delete patient') do
+    #   tags 'Patients'
+    #   response(200, 'successful') do
+    #     let(:id) { '123' }
+    #
+    #     after do |example|
+    #       example.metadata[:response][:content] = {
+    #         'application/json' => {
+    #           example: JSON.parse(response, symbolize_names: true)
+    #         }
+    #       }
+    #     end
+    #     run_test!
+    #   end
+    # end
   end
 end

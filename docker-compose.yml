@@ -43,7 +43,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "bundle exec rails s -b 0.0.0.0 -p 3000"
+      args:
+        RAILS_ENV: ${RAILS_ENV:-development}
+
     volumes:
       - .:/rails
     ports:
@@ -56,6 +58,8 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 5432
+      RAILS_SERVE_STATIC_FILES: "true"
+
 
 volumes:
   pgdata:

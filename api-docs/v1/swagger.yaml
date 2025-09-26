@@ -1,11 +1,324 @@
 ---
-openapi: 3.0.1
+swagger: '2.0'
 info:
   title: API V1
   version: v1
-paths: {}
+paths:
+  "/bmr":
+    post:
+      summary: calculate bmr
+      parameters:
+      - name: calc_params
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            formula:
+              type: string
+              example: mifflin
+              description: Formula name lowercase
+            id:
+              type: integer
+              example: 1
+              description: Patient Id
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: successful
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              formula:
+                type: string
+          content:
+            application/json:
+              example:
+                patient_id: 1
+                formula: harris
+                result: '1357.16264'
+  "/doctors":
+    get:
+      summary: list doctors
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+              - id: 1
+                first_name: Jefferey
+                last_name: Leuschke
+                middle_name: Spencer
+                created_at: '2025-09-26T22:50:49.745Z'
+                updated_at: '2025-09-26T22:50:49.745Z'
+              - id: 2
+                first_name: Tanna
+                last_name: Blick
+                middle_name: Glover
+                created_at: '2025-09-26T22:50:49.752Z'
+                updated_at: '2025-09-26T22:50:49.752Z'
+              - id: 3
+                first_name: Modesta
+                last_name: Koepp
+                middle_name: Hansen
+                created_at: '2025-09-26T22:50:49.755Z'
+                updated_at: '2025-09-26T22:50:49.755Z'
+              - id: 4
+                first_name: Luigi
+                last_name: Herman
+                middle_name: Hammes
+                created_at: '2025-09-26T22:50:49.757Z'
+                updated_at: '2025-09-26T22:50:49.757Z'
+              - id: 5
+                first_name: Lala
+                last_name: Klein
+                middle_name: Bayer
+                created_at: '2025-09-26T22:50:49.759Z'
+                updated_at: '2025-09-26T22:50:49.759Z'
+    post:
+      summary: create doctor
+      tags:
+      - Doctors
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: doctor
+        in: body
+        schema:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            middle_name:
+              type: string
+          required:
+          - first_name
+          - last_name
+      responses:
+        '201':
+          description: Doctor created successfully
+  "/doctors/{id}":
+    parameters:
+    - name: id
+      in: path
+      type: integer
+      description: id
+      required: true
+    get:
+      summary: show doctor
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                id: 6
+                first_name: Albertine
+                last_name: Emard
+                middle_name: Quitzon
+                created_at: '2025-09-26T22:50:50.063Z'
+                updated_at: '2025-09-26T22:50:50.063Z'
+    put:
+      summary: update doctor
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - Doctors
+      parameters:
+      - name: doctor
+        in: body
+        type: object
+        schema:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            middle_name:
+              type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                first_name: Carson
+                last_name: Blick
+                middle_name: West
+                id: 6
+                created_at: '2025-09-26T22:50:50.229Z'
+                updated_at: '2025-09-26T22:50:50.229Z'
+  "/patients":
+    get:
+      summary: list patients
+      parameters:
+      - name: full_name
+        in: query
+        type: string
+      - name: gender
+        in: query
+        type: string
+      - name: offset
+        in: query
+        type: integer
+      - name: limit
+        in: query
+        type: integer
+      tags:
+      - Patients
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value: []
+    post:
+      summary: Create patient
+      tags:
+      - Patients
+      consumes:
+      - application/json
+      parameters:
+      - name: patient
+        in: body
+        schema:
+          type: object
+          properties:
+            patient:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                birthday:
+                  type: string
+                  format: date
+                height:
+                  type: number
+                weight:
+                  type: number
+                gender:
+                  type: string
+                doctor_ids:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - first_name
+              - last_name
+              - birthday
+              - height
+              - weight
+              - gender
+      responses:
+        '201':
+          description: created
+  "/patients/{id}":
+    parameters:
+    - name: id
+      in: path
+      type: integer
+      description: id
+      required: true
+    get:
+      summary: show patient
+      tags:
+      - Patients
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                id: 1
+                first_name: Albertha
+                last_name: VonRueden
+                middle_name: Feil
+                gender_id: 1
+                birthday: '2006-02-24'
+                height: 210
+                weight: '65.46'
+                created_at: '2025-09-26T22:50:50.691Z'
+                updated_at: '2025-09-26T22:50:50.691Z'
+                full_name: albertha vonrueden feil
+                doctors: []
+                gender:
+                  id: 1
+                  name: Agender
+                  created_at: '2025-09-26T22:50:50.687Z'
+                  updated_at: '2025-09-26T22:50:50.687Z'
+    put:
+      summary: update patient
+      tags:
+      - Patients
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: patient
+        in: body
+        description: patient
+        shema:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            middle_name:
+              type: string
+            birthday:
+              type: string
+              format: date
+            height:
+              type: number
+            weight:
+              type: number
+            gender:
+              type: string
+            doctor_ids:
+              type: array
+              items:
+                type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                id: 1
+                first_name: Serina
+                last_name: Huels
+                middle_name: Heidenreich
+                gender_id: 1
+                birthday: '1997-03-27'
+                height: 161
+                weight: '51.94'
+                created_at: '2025-09-26T22:50:50.842Z'
+                updated_at: '2025-09-26T22:50:50.842Z'
+                full_name: serina huels heidenreich
+                doctors: []
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: localhost:3000

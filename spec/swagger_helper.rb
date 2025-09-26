@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'database_cleaner-active_record'
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
@@ -14,9 +15,34 @@ RSpec.configure do |config|
   # By default, the operations defined in spec files are added to the first
   # document below. You can override this behavior by adding a openapi_spec tag to the
   # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
+
+  config.use_transactional_fixtures = false
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    # задаём стратегию по умолчанию
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each) do |example|
+    # для request-type (или для rswag спецификаций) используем truncation
+    if example.metadata[:type] == :request
+      DatabaseCleaner.strategy = :truncation
+    else
+      DatabaseCleaner.strategy = :transaction
+    end
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+
   config.openapi_specs = {
     'v1/swagger.yaml' => {
-      openapi: '3.0.1',
+      # openapi: '3.0.1',
+      swagger: '2.0',
       info: {
         title: 'API V1',
         version: 'v1'
@@ -24,10 +50,10 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }

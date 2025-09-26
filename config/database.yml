@@ -19,16 +19,16 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-  username: <%= ENV.fetch("DB_USER") %>
-  password: <%= ENV.fetch("DB_PASSWORD") %>
+  username: <%= ENV.fetch("DB_USER") {"postgres"} %>
+  password: <%= ENV.fetch("DB_PASSWORD") {"postgres"} %>
+  host: <%= ENV.fetch("DB_HOST") {"localhost"} %>
 
 
 
 development:
   <<: *default
-  database: <%= ENV.fetch("DB_NAME") %>
-  host: <%= ENV.fetch("DB_HOST") %>
-  port: <%= ENV.fetch("DB_PORT") %>
+  database: <%= ENV.fetch("DB_NAME") {"medods_test_development"} %>
+  port: <%= ENV.fetch("DB_PORT") { 5432 }%>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -62,9 +62,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV.fetch("DB_NAME_TEST") %>
-  host: <%= ENV.fetch("DB_HOST_TEST") %>
-  port: <%= ENV.fetch("DB_PORT_TEST") %>
+  database: <%= ENV.fetch("DB_NAME_TEST") {"medods_test_test"}%>
+  port: <%= ENV.fetch("DB_PORT_TEST") {5432} %>
   min_messages: WARNING
 
 # As with config/credentials.yml, you never want to store sensitive information,
@@ -91,7 +90,7 @@ production:
   primary: &primary_production
     <<: *default
     database: medods_test_production
-    username: medods_test
+    username: postgres
     password: <%= ENV["MEDODS_TEST_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production

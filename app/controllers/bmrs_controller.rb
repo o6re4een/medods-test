@@ -8,7 +8,14 @@ class BmrsController < ApplicationController
 
   def calculate
     patient = Patient.find(params[:id])
+    begin
     result = Patients::BmrService.new(patient, params[:formula]).call
+
+    rescue => error
+      return render json: {errors: "Error occured during calculate #{error}"}
+
+    end
+
     render json: { patient_id: patient.id, formula: params[:formula], result: result }
   end
 end
