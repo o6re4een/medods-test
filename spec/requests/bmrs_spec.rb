@@ -16,7 +16,6 @@ RSpec.describe 'bmrs', type: :request do
       consumes 'application/json'
       produces 'application/json'
 
-
       response(200, 'successful') do
         schema type: :object,
                properties: {
@@ -27,7 +26,6 @@ RSpec.describe 'bmrs', type: :request do
         let!(:formula_name) { create(:formula).name }
 
         let(:calc_params) { { "formula" => formula_name, "id" => patient.id } }
-
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -43,8 +41,14 @@ RSpec.describe 'bmrs', type: :request do
     get('history bmr') do
       tags 'BMR'
 
-      let!(:bmr_history) { create_list(:bmr_history, 3) }
+      parameter name: :id, in: :query, type: :integer, required: true
+      parameter name: :offset, in: :query, type: :integer
+      parameter name: :limit, in: :query, type: :integer
       response(200, 'successful') do
+        let!(:bmr_history) { create_list(:bmr_history, 1) }
+        let(:id) { bmr_history.first.patient.id }
+        let(:offset) { 0 }
+        let(:limit) { 2 }
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

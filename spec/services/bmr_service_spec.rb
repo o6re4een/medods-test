@@ -20,10 +20,11 @@ RSpec.describe Patients::BmrService, type: :service do
 
       expect(@result).to be_within(0.5).of(expected_res)
 
-      record = BmrHistory.order(:created_at).last
+      record = BmrHistory.order(:created_at).first
       expect(record.patient_id).to eq patient.id
       expect(record.result.to_f).to be_within(0.5).of(expected_res)
       expect(record.formula.name).to eq("mifflin")
+  
       expect(record.calculated_on).to eq(Date.current)
 
     end

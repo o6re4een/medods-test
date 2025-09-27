@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
@@ -7,21 +8,10 @@ Rails.application.routes.draw do
 
   get "bmi", to: "bmi#calculate"
 
+  resources :gender
 
   resources :patients
 
-  resources :bmrs, only: [] do
-    collection do
-      post :calculate
-      get :history
-    end
-  end
-
-  resources :bmi, only: [] do
-    collection do
-      get :calculate
-    end
-  end
   # get "patients/index" =>"patients#index"
   # get "patients/show"
   # post "patients/create" =>"patients#create"

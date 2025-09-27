@@ -50,7 +50,6 @@
     <orderEntry type="library" scope="PROVIDED" name="brakeman (v7.1.0, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.3.0, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.6.9, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="capybara (v3.40.0, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.3.5, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="connection_pool (v2.5.4, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="crass (v1.0.6, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
@@ -81,7 +80,6 @@
     <orderEntry type="library" scope="PROVIDED" name="loofah (v2.24.1, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.8.1, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="marcel (v1.1.0, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="matrix (v0.4.3, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.1.5, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.25.5, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="msgpack (v1.8.0, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
@@ -155,7 +153,6 @@
     <orderEntry type="library" scope="PROVIDED" name="websocket (v1.2.11, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket-driver (v0.8.0, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.5, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.7.3, Remote-mise: ruby-3.4.6-p54) [gem]" level="application" />
   </component>
   <component name="RModuleSettingsStorage">

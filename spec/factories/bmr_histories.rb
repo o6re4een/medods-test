@@ -8,9 +8,9 @@ FactoryBot.define do
     association :patient
     association :formula
 
-    before(:create) do |bmr_history|
-      bmr_history.patient ||= FactoryBot.create(:patient)
-      bmr_history.formula ||= FactoryBot.create(:formula)
+    before(:create) do |bmr_record|
+      bmr_record.patient ||= FactoryBot.create(:patient)
+      bmr_record.formula ||= create_or_return_formula
     end
   end
 end

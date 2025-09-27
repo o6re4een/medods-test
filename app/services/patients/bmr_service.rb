@@ -30,14 +30,13 @@ module Patients
       formula = Formula.find_by!(name: @formula_name)
 
       BmrHistory.create!(
-      patient: @patient,
-      formula: formula,
-      result: result,
-      calculated_on: Date.today,
+        patient: @patient,
+        formula: formula,
+        result: result,
+        calculated_on: Date.current,
       )
       result
     end
-
 
   end
 end

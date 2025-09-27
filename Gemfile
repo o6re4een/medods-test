@@ -57,8 +57,6 @@ group :development, :test do
   gem "dotenv-rails"
 end
 
-gem "sorbet-runtime"
-
 gem "rswag"
 
 group :development do
@@ -69,7 +67,7 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
+  # gem "capybara"
   gem "selenium-webdriver"
   gem "database_cleaner-active_record"
   gem "webmock"

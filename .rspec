@@ -1,5 +1,7 @@
---require spec_helper
 --color
 --order rand
---require rails_helper
+
 --format doc
+--require spec_helper
+--require rails_helper
+--require swagger_helper

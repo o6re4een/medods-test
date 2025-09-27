@@ -1,6 +1,12 @@
 class BmrsController < ApplicationController
   def history
-    patient = Patient.find(params[:id])
+    begin
+      patient = Patient.find(params[:id])
+
+    rescue => error
+      return render json: { error: "#{error}" }
+
+    end
 
     history = patient.bmr_histories.limit(params[:limit] || 20).offset(params[:offset] || 0)
     render json: history
@@ -9,10 +15,10 @@ class BmrsController < ApplicationController
   def calculate
     patient = Patient.find(params[:id])
     begin
-    result = Patients::BmrService.new(patient, params[:formula]).call
+      result = Patients::BmrService.new(patient, params[:formula]).call
 
     rescue => error
-      return render json: {errors: "Error occured during calculate #{error}"}
+      return render json: { errors: "Error occured during calculate #{error}" }
 
     end
 

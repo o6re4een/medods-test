@@ -21,7 +21,8 @@ fi
 
 if [ "${RAILS_ENV:-development}" = "development" ] || [ "${RAILS_ENV:-development}" = "test" ]; then
   echo "Preparing database for RAILS_ENV=${RAILS_ENV:-development}"
-  bundle exec rails db:create db:migrate db:seed || true
+  bundle exec rails db:prepare || true
+  bundle exec rails db:seed || true
 fi
 
 exec "$@"

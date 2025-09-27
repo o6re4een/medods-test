@@ -16,33 +16,10 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a openapi_spec tag to the
   # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
 
-  config.use_transactional_fixtures = false
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-    # задаём стратегию по умолчанию
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each) do |example|
-    # для request-type (или для rswag спецификаций) используем truncation
-    if example.metadata[:type] == :request
-      DatabaseCleaner.strategy = :truncation
-    else
-      DatabaseCleaner.strategy = :transaction
-    end
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-
-
   config.openapi_specs = {
     'v1/swagger.yaml' => {
-      # openapi: '3.0.1',
-      swagger: '2.0',
+      openapi: '3.0.1',
+      # swagger: '2.0',
       info: {
         title: 'API V1',
         version: 'v1'
@@ -66,4 +43,10 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
+  config.rswag_dry_run = false
+
+  # config.before(:each, :request) do
+  #   # эмуляция авторизованного контекста
+  #   allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+  # end
 end

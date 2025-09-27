@@ -21,18 +21,24 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.include FactoryBot::Syntax::Methods
-
+  Faker::Config.random = Random.new
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
+  config.before(:each) do |example|
+    # Для request-спек (rswag) используем truncation, иначе transaction
+    if example.metadata[:type] == :request
+      DatabaseCleaner.strategy = :truncation
+    else
+      DatabaseCleaner.strategy = :transaction
     end
+    DatabaseCleaner.start
   end
 
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 
 end

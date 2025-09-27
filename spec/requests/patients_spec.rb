@@ -1,45 +1,39 @@
 require 'swagger_helper'
 
 RSpec.describe 'Patients API', type: :request do
-  # let!(:patients) { create_list(:patient, 2) }
 
   path '/patients' do
+
     get('list patients') do
+      produces "application/json"
+      consumes "application/json"
+
       parameter name: :full_name, in: :query, type: :string
       parameter name: :gender, in: :query, type: :string
       parameter name: :offset, in: :query, type: :integer
       parameter name: :limit, in: :query, type: :integer
+      # let!(:gender) { create(:gender, name: 'male') }
 
       response(200, 'successful') do
-        let!(:patients) { create_list(:patient, 2) }
+
         tags 'Patients'
-        produces "application/json"
+        let!(:patients) { create_list(:patient, 1, :with_doctors) }
 
-
-        let(:full_name) { patients[0].first_name+" "+patients[0].last_name+ ""+ patients[0].middle_name }
-        let(:gender) { create(:gender).name }
+        let(:full_name) { patients[0].first_name }
+        let(:gender) { patients[0].gender.name }
         let(:offset) { 0 }
         let(:limit) { 10 }
 
-
         after do |example|
-          content = example.metadata[:response][:content] || {}
-          example_spec = {
-            "application/json" => {
-              examples: {
-                test_example: {
-                  value: JSON.parse(response.body, symbolize_names: true)
-                }
-              }
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
             }
           }
-          example.metadata[:response][:content] = content.deep_merge(example_spec)
         end
         run_test!
       end
     end
-
-
 
     post 'Create patient' do
       tags 'Patients'
@@ -116,7 +110,17 @@ RSpec.describe 'Patients API', type: :request do
       end
 
       response(200, 'successful') do
-        let(:patient) { @patient  }
+        let(:patient) do
+          {
+            first_name: 'Иван',
+            last_name: 'Петров',
+            birthday: '1990-01-01',
+            height: 180,
+            weight: 75.0,
+            gender: 'male',
+            doctor_ids: []
+          }
+        end
         let(:id) { @patient.id }
 
         after do |example|

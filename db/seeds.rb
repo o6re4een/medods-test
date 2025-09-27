@@ -8,11 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-
-["male", "female"].each do |gender|
+[ "Male", "Female" ].each do |gender|
   Gender.find_or_create_by!(name: gender)
 end
 
-["mifflin", "harris"].each do |formula|
+[ "mifflin", "harris" ].each do |formula|
   Formula.find_or_create_by!(name: formula)
 end

@@ -1,14 +1,19 @@
 require 'swagger_helper'
 require 'database_cleaner-active_record'
 
-RSpec.describe 'doctors', tags: "Doctors",  type: :request do
+RSpec.describe 'doctors', tags: "Doctors", type: :request do
   let!(:doctors) { create_list(:doctor, 5) }
-  let(:id) { doctors.first.id }
+
   path '/doctors' do
 
     get('list doctors') do
+      tags "Doctor"
+      parameter name: :offset, in: :query, type: :number, required: false
+      parameter name: :limit, in: :query, type: :number, required: false
 
       response(200, 'successful') do
+        let(:offset) { 0 }
+        let(:limit) { 10 }
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -24,7 +29,7 @@ RSpec.describe 'doctors', tags: "Doctors",  type: :request do
     post('create doctor') do
       let!(:doctor) { build(:doctor) }
 
-      tags 'Doctors'
+      tags 'Doctor'
       consumes 'application/json'
       produces 'application/json'
       parameter name: :doctor, in: :body, schema: {
@@ -49,16 +54,15 @@ RSpec.describe 'doctors', tags: "Doctors",  type: :request do
 
   path '/doctors/{id}' do
 
-
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :integer, description: 'id'
-
+    let(:id) { doctors.first.id }
     get('show doctor') do
+      tags 'Doctor'
       response(200, 'successful') do
         # let(:request_params) {:doctor}
         let!(:doctor) { create(:doctor) }
         let(:id) { doctor.id }
-
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -74,7 +78,7 @@ RSpec.describe 'doctors', tags: "Doctors",  type: :request do
     put('update doctor') do
       consumes 'application/json'
       produces 'application/json'
-      tags 'Doctors'
+      tags 'Doctor'
 
       parameter name: :doctor, in: :body, type: :object, schema: {
         type: :object,
@@ -91,7 +95,7 @@ RSpec.describe 'doctors', tags: "Doctors",  type: :request do
       end
 
       response(200, 'successful') do
-        let(:doctor) {{:doctor=>@doctor}}
+        let(:doctor) { { :doctor => @doctor } }
 
         let(:id) { @doctor.id }
 
@@ -109,21 +113,6 @@ RSpec.describe 'doctors', tags: "Doctors",  type: :request do
         end
       end
     end
-
-    # delete('delete doctor') do
-    #   response(200, 'successful') do
-    #
-    #
-    #     after do |example|
-    #       example.metadata[:response][:content] = {
-    #         'application/json' => {
-    #           example: JSON.parse(response.body, symbolize_names: true)
-    #         }
-    #       }
-    #     end
-    #     run_test!
-    #   end
-    # end
 
   end
 end

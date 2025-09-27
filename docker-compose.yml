@@ -19,25 +19,10 @@ services:
       - "${DB_PORT}:5432"
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
       interval: 5s
       timeout: 5s
       retries: 5
-
-#  db_test:
-#    image: postgres:15
-#    volumes:
-#      - pgdata_test:/var/lib/postgresql/data
-#    env_file:
-#      - path: .env
-#        required: true
-#    environment:
-#      POSTGRES_USER: ${DB_USER}
-#      POSTGRES_PASSWORD: ${DB_PASSWORD}
-#      POSTGRES_DB: ${DB_NAME_TEST}
-#      POSTGRES_PORT: ${DB_PORT_TEST}
-#    ports:
-#      - "${DB_PORT_TEST}:5432"
 
   web:
     build:
@@ -63,4 +48,3 @@ services:
 
 volumes:
   pgdata:
-  pgdata_test:
