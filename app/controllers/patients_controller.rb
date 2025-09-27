@@ -22,12 +22,8 @@ class PatientsController < ApplicationController
   end
 
   def show
-    patient = nil
-    begin
-      patient = Patient.find(params[:id])
-    rescue => error
-      return render json: { error: "#{error}" }, status: :unprocessable_entity
-    end
+
+    patient = Patient.find(params[:id])
 
     if patient
       render json: patient.as_json(include: [ :doctors, :gender ])

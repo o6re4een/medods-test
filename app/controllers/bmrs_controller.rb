@@ -1,12 +1,7 @@
 class BmrsController < ApplicationController
   def history
-    begin
-      patient = Patient.find(params[:id])
 
-    rescue => error
-      return render json: { error: "#{error}" }
-
-    end
+    patient = Patient.find(params[:id])
 
     history = patient.bmr_histories.limit(params[:limit] || 20).offset(params[:offset] || 0)
     render json: history

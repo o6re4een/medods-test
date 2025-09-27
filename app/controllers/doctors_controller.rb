@@ -22,8 +22,6 @@ class DoctorsController < ApplicationController
     doctor = Doctor.find(params[:id])
     Rails.logger.debug "UPDATE PARAMS: #{params.to_unsafe_h}"
 
-
-
     if doctor.update(doctor_params)
       render json: doctor, status: :ok
     else
