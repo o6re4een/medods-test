@@ -20,10 +20,10 @@ paths:
           content:
             application/json:
               example:
-                Category: Obesity
-                bmi: 262.385
-                height: 1.05
-                weight: 289.28
+                Category: Normal weight
+                bmi: 23.834
+                height: 0.94
+                weight: 21.06
   "/bmr":
     post:
       summary: calculate bmr
@@ -38,7 +38,7 @@ paths:
               example:
                 patient_id: 1
                 formula: harris
-                result: '2349.43913999999999'
+                result: '3010.22237'
               schema:
                 type: object
                 properties:
@@ -88,10 +88,10 @@ paths:
               - id: 1
                 patient_id: 1
                 formula_id: 1
-                result: '75.0'
-                calculated_on: '2024-11-03'
-                created_at: '2025-09-27T20:41:47.483Z'
-                updated_at: '2025-09-27T20:41:47.483Z'
+                result: '48.0'
+                calculated_on: '2024-10-12'
+                created_at: '2025-09-27T23:42:29.138Z'
+                updated_at: '2025-09-27T23:42:29.138Z'
   "/doctors":
     get:
       summary: list doctors
@@ -115,35 +115,35 @@ paths:
             application/json:
               example:
               - id: 1
-                first_name: Skye
-                last_name: Hackett
-                middle_name: Hilll
-                created_at: '2025-09-27T20:41:47.579Z'
-                updated_at: '2025-09-27T20:41:47.579Z'
+                first_name: Jason
+                last_name: Hudson
+                middle_name: O'Connell
+                created_at: '2025-09-27T23:42:29.229Z'
+                updated_at: '2025-09-27T23:42:29.229Z'
               - id: 2
-                first_name: Dee
-                last_name: Schulist
-                middle_name: Becker
-                created_at: '2025-09-27T20:41:47.584Z'
-                updated_at: '2025-09-27T20:41:47.584Z'
+                first_name: Theda
+                last_name: Block
+                middle_name: Thompson
+                created_at: '2025-09-27T23:42:29.234Z'
+                updated_at: '2025-09-27T23:42:29.234Z'
               - id: 3
-                first_name: Efrain
-                last_name: Wyman
-                middle_name: Bergstrom
-                created_at: '2025-09-27T20:41:47.587Z'
-                updated_at: '2025-09-27T20:41:47.587Z'
+                first_name: Hugh
+                last_name: Bartell
+                middle_name: Daugherty
+                created_at: '2025-09-27T23:42:29.237Z'
+                updated_at: '2025-09-27T23:42:29.237Z'
               - id: 4
-                first_name: Retta
-                last_name: Padberg
-                middle_name: Goodwin
-                created_at: '2025-09-27T20:41:47.592Z'
-                updated_at: '2025-09-27T20:41:47.592Z'
+                first_name: Kelly
+                last_name: Fritsch
+                middle_name: Wisoky
+                created_at: '2025-09-27T23:42:29.241Z'
+                updated_at: '2025-09-27T23:42:29.241Z'
               - id: 5
-                first_name: Herman
-                last_name: Moore
-                middle_name: Abshire
-                created_at: '2025-09-27T20:41:47.595Z'
-                updated_at: '2025-09-27T20:41:47.595Z'
+                first_name: Josue
+                last_name: Simonis
+                middle_name: Kunde
+                created_at: '2025-09-27T23:42:29.244Z'
+                updated_at: '2025-09-27T23:42:29.244Z'
     post:
       summary: create doctor
       tags:
@@ -186,11 +186,11 @@ paths:
             application/json:
               example:
                 id: 6
-                first_name: Rocco
-                last_name: Ankunding
-                middle_name: McClure
-                created_at: '2025-09-27T20:41:47.783Z'
-                updated_at: '2025-09-27T20:41:47.783Z'
+                first_name: Solomon
+                last_name: Fritsch
+                middle_name: Hane
+                created_at: '2025-09-27T23:42:29.417Z'
+                updated_at: '2025-09-27T23:42:29.417Z'
     put:
       summary: update doctor
       tags:
@@ -202,12 +202,12 @@ paths:
           content:
             application/json:
               example:
-                first_name: Ana
-                last_name: Hoeger
-                middle_name: Jaskolski
+                first_name: Charmain
+                last_name: Bogan
+                middle_name: Luettgen
                 id: 6
-                created_at: '2025-09-27T20:41:47.875Z'
-                updated_at: '2025-09-27T20:41:47.875Z'
+                created_at: '2025-09-27T23:42:29.501Z'
+                updated_at: '2025-09-27T23:42:29.501Z'
       requestBody:
         content:
           application/json:
@@ -231,8 +231,8 @@ paths:
               example:
               - id: 1
                 name: Female
-                created_at: '2025-09-27T20:41:48.040Z'
-                updated_at: '2025-09-27T20:41:48.040Z'
+                created_at: '2025-09-27T23:42:29.643Z'
+                updated_at: '2025-09-27T23:42:29.643Z'
     post:
       summary: create gender
       parameters: []
@@ -281,34 +281,34 @@ paths:
             application/json:
               example:
               - id: 1
-                first_name: Fermin
-                last_name: Oberbrunner
-                middle_name: Kshlerin
+                first_name: Val
+                last_name: Ondricka
+                middle_name: Spinka
                 gender_id: 1
-                birthday: '2001-07-09'
-                height: 183
-                weight: '222.84'
-                created_at: '2025-09-27T20:41:48.285Z'
-                updated_at: '2025-09-27T20:41:48.285Z'
-                full_name: fermin oberbrunner kshlerin
+                birthday: '1979-10-02'
+                height: 137
+                weight: '158.72'
+                created_at: '2025-09-27T23:42:29.861Z'
+                updated_at: '2025-09-27T23:42:29.861Z'
+                full_name: val ondricka spinka
                 doctors:
                 - id: 1
-                  first_name: Salvatore
-                  last_name: Rempel
-                  middle_name: Donnelly
-                  created_at: '2025-09-27T20:41:48.289Z'
-                  updated_at: '2025-09-27T20:41:48.289Z'
+                  first_name: Miranda
+                  last_name: Rolfson
+                  middle_name: Schmitt
+                  created_at: '2025-09-27T23:42:29.864Z'
+                  updated_at: '2025-09-27T23:42:29.864Z'
                 - id: 2
-                  first_name: Lakia
-                  last_name: O'Conner
-                  middle_name: O'Kon
-                  created_at: '2025-09-27T20:41:48.293Z'
-                  updated_at: '2025-09-27T20:41:48.293Z'
+                  first_name: Tatiana
+                  last_name: Frami
+                  middle_name: Reilly
+                  created_at: '2025-09-27T23:42:29.868Z'
+                  updated_at: '2025-09-27T23:42:29.868Z'
                 gender:
                   id: 1
-                  name: Female
-                  created_at: '2025-09-27T20:41:48.281Z'
-                  updated_at: '2025-09-27T20:41:48.281Z'
+                  name: Male
+                  created_at: '2025-09-27T23:42:29.857Z'
+                  updated_at: '2025-09-27T23:42:29.857Z'
     post:
       summary: Create patient
       tags:
@@ -369,22 +369,22 @@ paths:
             application/json:
               example:
                 id: 1
-                first_name: Brent
-                last_name: Streich
-                middle_name: Schaefer
+                first_name: Patience
+                last_name: Zboncak
+                middle_name: Parker
                 gender_id: 1
-                birthday: '1978-05-02'
-                height: 84
-                weight: '200.35'
-                created_at: '2025-09-27T20:41:48.524Z'
-                updated_at: '2025-09-27T20:41:48.524Z'
-                full_name: brent streich schaefer
+                birthday: '1981-11-11'
+                height: 137
+                weight: '19.78'
+                created_at: '2025-09-27T23:42:30.076Z'
+                updated_at: '2025-09-27T23:42:30.076Z'
+                full_name: patience zboncak parker
                 doctors: []
                 gender:
                   id: 1
-                  name: Female
-                  created_at: '2025-09-27T20:41:48.519Z'
-                  updated_at: '2025-09-27T20:41:48.519Z'
+                  name: Male
+                  created_at: '2025-09-27T23:42:30.072Z'
+                  updated_at: '2025-09-27T23:42:30.072Z'
     put:
       summary: update patient
       tags:
@@ -399,14 +399,14 @@ paths:
                 id: 1
                 first_name: Иван
                 last_name: Петров
-                middle_name: Roberts
+                middle_name: Denesik
                 gender_id: 1
                 birthday: '1990-01-01'
                 height: 180
                 weight: '75.0'
-                created_at: '2025-09-27T20:41:48.609Z'
-                updated_at: '2025-09-27T20:41:48.623Z'
-                full_name: иван петров roberts
+                created_at: '2025-09-27T23:42:30.149Z'
+                updated_at: '2025-09-27T23:42:30.161Z'
+                full_name: иван петров denesik
                 doctors: []
 servers:
 - url: http://{defaultHost}
